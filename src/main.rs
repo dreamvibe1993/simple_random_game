@@ -9,31 +9,31 @@ fn main() {
         hp: 100,
         name: String::from("George"),
     };
-    let mut rust = GameData {
+    let mut enemy = GameData {
         hp: rand::thread_rng().gen_range(100..150),
         name: String::from("The Enemy"),
     };
     println!("Hello {}! Your HP is {}!", me.name.green(), me.show_hp());
-    println!("Your {} HP is {}!", "Enemy".red(), rust.show_hp());
+    println!("Your {} HP is {}!", "Enemy".red(), enemy.show_hp());
     println!("To hit your enemy type 'hit'. To heal yourself type 'heal'");
     println!("Make a move!");
     loop {
-        player_makes_move(&mut me, &mut rust);
+        i_make_a_move(&mut me, &mut enemy);
         let my_hp = me.show_hp();
-        let rust_hp = rust.show_hp();
+        let enemy_hp = enemy.show_hp();
 
-        match tell_us_who_died(my_hp, rust_hp) {
+        match tell_us_who_died(my_hp, enemy_hp) {
             enums::Dead::Me => break,
             enums::Dead::Both => break,
             enums::Dead::Enemy => break,
             enums::Dead::Nobody => println!("Enemy makes a move!"),
         };
 
-        rust_makes_move(&mut me, &mut rust);
+        rust_makes_move(&mut me, &mut enemy);
         let my_hp = me.show_hp();
-        let rust_hp = rust.show_hp();
+        let enemy_hp = enemy.show_hp();
 
-        match tell_us_who_died(my_hp, rust_hp) {
+        match tell_us_who_died(my_hp, enemy_hp) {
             enums::Dead::Me => break,
             enums::Dead::Both => break,
             enums::Dead::Enemy => break,
@@ -60,7 +60,7 @@ fn tell_us_who_died(my_hp: i32, enemy_hp: i32) -> enums::Dead {
     }
 }
 
-fn player_makes_move(me: &mut GameData, enemy: &mut GameData) {
+fn i_make_a_move(me: &mut GameData, enemy: &mut GameData) {
     let mut my_input = String::new();
 
     io::stdin()
